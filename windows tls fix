@@ -1,0 +1,27 @@
+To disable TLS 1.0 and TLS 1.1 on a Windows machine, you'll need to modify the SSL/TLS configuration in the Windows registry. Here's a step-by-step guide:
+
+1. **Open Registry Editor**: Press `Win + R` to open the Run dialog, type `regedit`, and press Enter. This will open the Registry Editor.
+
+2. **Navigate to the SSL/TLS Configuration**: In the Registry Editor, navigate to the following registry key:
+
+   ```
+   HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols
+   ```
+
+3. **Locate TLS 1.0 and TLS 1.1 Subkeys**: Under the "Protocols" key, you should see subkeys named `TLS 1.0` and `TLS 1.1`. If they don't exist, you'll need to create them.
+
+   - Right-click on the "Protocols" key.
+   - Choose `New` > `Key`.
+   - Name the new key `TLS 1.0`.
+   - Repeat the process to create a `TLS 1.1` key.
+
+4. **Configure TLS 1.0 and TLS 1.1 Subkeys**: Within each of the `TLS 1.0` and `TLS 1.1` subkeys, create the following DWORD values (if they don't already exist) and set their values to `0x00000000`:
+
+   - `DisabledByDefault`: Set to `1` to disable TLS 1.0 or TLS 1.1.
+   - `Enabled`: Set to `0` to disable TLS 1.0 or TLS 1.1.
+
+5. **Restart the System**: After making changes to the registry, it's recommended to restart the system to ensure that the changes take effect.
+
+6. **Test Connectivity**: After restarting, test the applications or services that rely on SSL/TLS connections to ensure they're still accessible and functioning correctly. Ensure that they're using TLS 1.2 or later as intended.
+
+By following these steps, you can effectively disable TLS 1.0 and TLS 1.1 on your Windows machine, helping to improve security by ensuring that only the latest and most secure SSL/TLS protocols are used for communication.
